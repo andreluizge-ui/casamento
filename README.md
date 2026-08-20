@@ -20,4 +20,4 @@ Depois, acesse `http://localhost:8000`.
 
 ## Recebimento das respostas
 
-O formulário está conectado ao Supabase. As respostas são centralizadas no banco de dados e podem ser consultadas em `admin.html` usando o código privado dos noivos.
+O formulário está conectado ao Supabase. As respostas são centralizadas no banco de dados e podem ser consultadas em `admin.html`.

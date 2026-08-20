@@ -9,15 +9,14 @@ const elements = {
 
 let respostas = [];
 let filtroAtual = "Todos";
-let codigoAcesso = sessionStorage.getItem("codigo-painel-casamento") || "";
 
-async function buscarRespostas(codigo) {
+async function buscarRespostas() {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/listar_confirmacoes`, {
     method: "POST",
     headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-    body: JSON.stringify({ p_codigo: codigo }),
+    body: JSON.stringify({ p_codigo: null }),
   });
-  if (!response.ok) throw new Error("Código inválido");
+  if (!response.ok) throw new Error("Não foi possível carregar as confirmações");
   return response.json();
 }
 
@@ -61,30 +60,6 @@ function renderizar() {
   elements.empty.classList.toggle("hidden", filtradas.length > 0);
 }
 
-async function entrarNoPainel(codigo) {
-  respostas = await buscarRespostas(codigo);
-  codigoAcesso = codigo;
-  sessionStorage.setItem("codigo-painel-casamento", codigo);
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-  renderizar();
-}
-
-document.getElementById("login-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const button = event.currentTarget.querySelector("button");
-  const error = document.getElementById("login-error");
-  button.disabled = true;
-  error.classList.add("hidden");
-  try {
-    await entrarNoPainel(document.getElementById("access-code").value);
-  } catch {
-    error.classList.remove("hidden");
-  } finally {
-    button.disabled = false;
-  }
-});
-
 elements.search.addEventListener("input", renderizar);
 document.querySelectorAll(".filter").forEach((button) => {
   button.addEventListener("click", () => {
@@ -107,4 +82,12 @@ document.getElementById("export-button").addEventListener("click", () => {
   URL.revokeObjectURL(downloadUrl);
 });
 
-if (codigoAcesso) entrarNoPainel(codigoAcesso).catch(() => sessionStorage.removeItem("codigo-painel-casamento"));
+buscarRespostas()
+  .then((dados) => {
+    respostas = dados;
+    renderizar();
+  })
+  .catch(() => {
+    elements.empty.querySelector("h3").textContent = "Não foi possível carregar a lista";
+    elements.empty.querySelector("p").textContent = "Atualize a página e tente novamente.";
+  });
