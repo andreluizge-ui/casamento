@@ -18,8 +18,6 @@ python -m http.server 8000
 
 Depois, acesse `http://localhost:8000`.
 
-## Importante: recebimento das respostas
+## Recebimento das respostas
 
-Nesta versão, as confirmações ficam salvas no navegador do próprio convidado (`localStorage`), o que serve para demonstração, mas não envia os dados aos noivos.
-
-Para publicar e receber respostas de verdade, conecte o formulário a um serviço como Formspree, Google Forms/Sheets, Netlify Forms ou a uma API própria. No `script.js`, substitua o trecho de `localStorage` dentro do evento `submit` por uma requisição `fetch` ao serviço escolhido.
+O formulário está conectado ao Supabase. As respostas são centralizadas no banco de dados e podem ser consultadas em `admin.html` usando o código privado dos noivos.

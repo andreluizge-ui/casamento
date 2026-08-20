@@ -12,6 +12,23 @@
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
+    <section class="login-screen" id="login-screen">
+      <div class="login-card">
+        <div class="monogram login-mark">A<span>&</span>G</div>
+        <p class="eyebrow">Área dos noivos</p>
+        <h1>Acessar confirmações</h1>
+        <p>Digite o código privado para visualizar a lista de convidados.</p>
+        <form id="login-form">
+          <label for="access-code">Código de acesso</label>
+          <input id="access-code" type="password" autocomplete="current-password" required />
+          <p class="login-error hidden" id="login-error">Código incorreto. Tente novamente.</p>
+          <button type="submit">Entrar no painel →</button>
+        </form>
+        <a href="index.html">Voltar para o convite</a>
+      </div>
+    </section>
+
+    <div id="dashboard" class="hidden">
     <header class="admin-header">
       <a class="monogram" href="index.html" aria-label="Voltar para o convite">A<span>&</span>G</a>
       <div>
@@ -90,6 +107,9 @@
       <p class="storage-note">Painel privado dos noivos · Limite configurado: 80 convidados</p>
     </main>
 
+    </div>
+
+    <script src="config.js"></script>
     <script src="admin.js"></script>
   </body>
 </html>
