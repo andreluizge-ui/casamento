@@ -14,7 +14,7 @@ let codigoAcesso = sessionStorage.getItem("codigo-painel-casamento") || "";
 async function buscarRespostas(codigo) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/listar_confirmacoes`, {
     method: "POST",
-    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, "Content-Type": "application/json" },
+    headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
     body: JSON.stringify({ p_codigo: codigo }),
   });
   if (!response.ok) throw new Error("Código inválido");

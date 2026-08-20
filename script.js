@@ -52,7 +52,7 @@ form.addEventListener("submit", async (event) => {
     const { url, key } = window.SUPABASE_CONFIG;
     const response = await fetch(`${url}/rest/v1/rpc/confirmar_presenca`, {
       method: "POST",
-      headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      headers: { apikey: key, "Content-Type": "application/json" },
       body: JSON.stringify({ p_nome: dados.nome, p_presenca: dados.presenca, p_mensagem: dados.mensagem || null }),
     });
     if (!response.ok) throw new Error("Falha no envio");
