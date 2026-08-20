@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#233d31" />
+    <meta name="description" content="Painel de confirmações do casamento de André e Giselly." />
+    <title>Lista de convidados | André & Giselly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <a class="monogram" href="index.html" aria-label="Voltar para o convite">A<span>&</span>G</a>
+      <div>
+        <p>7 de novembro de 2026</p>
+        <h1>Lista de convidados</h1>
+      </div>
+      <a class="back-link" href="index.html">Ver convite ↗</a>
+    </header>
+
+    <main>
+      <section class="summary" aria-label="Resumo das confirmações">
+        <article class="summary-card primary">
+          <span>Confirmados</span>
+          <strong id="confirmed-count">0</strong>
+          <small>de 80 convidados</small>
+          <div class="capacity-bar" aria-hidden="true"><i id="capacity-progress"></i></div>
+        </article>
+        <article class="summary-card">
+          <span>Não poderão ir</span>
+          <strong id="declined-count">0</strong>
+          <small>respostas recebidas</small>
+        </article>
+        <article class="summary-card">
+          <span>Vagas restantes</span>
+          <strong id="remaining-count">80</strong>
+          <small>até o limite</small>
+        </article>
+        <article class="summary-card">
+          <span>Total de respostas</span>
+          <strong id="response-count">0</strong>
+          <small>confirmações enviadas</small>
+        </article>
+      </section>
+
+      <section class="guest-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">RSVP</p>
+            <h2>Respostas recebidas</h2>
+          </div>
+          <button id="export-button" class="export-button" type="button">Baixar lista (.csv)</button>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-field">
+            <span aria-hidden="true">⌕</span>
+            <input id="search" type="search" placeholder="Buscar convidado pelo nome" autocomplete="off" />
+          </label>
+          <div class="filters" aria-label="Filtrar respostas">
+            <button class="filter active" type="button" data-filter="Todos">Todos</button>
+            <button class="filter" type="button" data-filter="Sim">Confirmados</button>
+            <button class="filter" type="button" data-filter="Não">Não irão</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Convidado</th>
+                <th>Resposta</th>
+                <th>Mensagem</th>
+                <th>Data da resposta</th>
+              </tr>
+            </thead>
+            <tbody id="guest-list"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state">
+            <span>✦</span>
+            <h3>Nenhuma resposta por aqui</h3>
+            <p>As confirmações aparecerão nesta lista.</p>
+          </div>
+        </div>
+      </section>
+
+      <p class="storage-note">Painel privado dos noivos · Limite configurado: 80 convidados</p>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

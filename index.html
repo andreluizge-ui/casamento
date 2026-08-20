@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f2ea" />
+    <meta name="description" content="Confirmação de presença para o nosso casamento." />
+    <title>Nosso casamento | Confirme sua presença</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" id="inicio">
+      <nav class="nav" aria-label="Navegação principal">
+        <a class="monogram" href="#inicio" aria-label="Início">A<span>&</span>G</a>
+        <div class="nav-links">
+          <a href="#detalhes">O grande dia</a>
+          <a href="#confirmacao">Confirmar presença</a>
+        </div>
+      </nav>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="arch arch-one"></div>
+        <div class="arch arch-two"></div>
+        <span class="botanical botanical-one">❧</span>
+        <span class="botanical botanical-two">❧</span>
+      </div>
+
+      <div class="hero-content reveal">
+        <p class="eyebrow">Vamos nos casar</p>
+        <h1><span id="nome-noiva">André</span> <i>&</i> <span id="nome-noivo">Giselly</span></h1>
+        <p class="intro">Tem histórias que ficam ainda mais bonitas quando compartilhadas.<br />Queremos você celebrando a nossa com a gente.</p>
+        <a class="button button-primary" href="#confirmacao">Confirmar presença <span>→</span></a>
+      </div>
+
+      <div class="hero-date" aria-label="Data do casamento">
+        <span id="dia-semana">Sábado</span>
+        <strong id="dia-mes">07 · 11</strong>
+        <span id="ano">2026</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="details section" id="detalhes">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Reserve esta data</p>
+          <h2>O nosso grande dia</h2>
+          <p>Preparamos tudo com muito carinho. Só falta ter você por perto.</p>
+        </div>
+
+        <div class="detail-grid">
+          <article class="detail-card reveal">
+            <span class="card-number">01</span>
+            <div class="line-icon" aria-hidden="true">◷</div>
+            <h3>Quando</h3>
+            <p id="data-completa">7 de novembro de 2026</p>
+            <strong id="horario">às 16h</strong>
+          </article>
+          <article class="detail-card featured reveal">
+            <span class="card-number">02</span>
+            <div class="line-icon" aria-hidden="true">⌂</div>
+            <h3>Onde</h3>
+            <p id="local">Espaço Dona Cora</p>
+            <strong id="endereco">Rua Cristóvão Cavalcanti, 181 · Iputinga · Recife/PE</strong>
+            <a id="mapa-link" href="https://maps.google.com" target="_blank" rel="noreferrer">Ver no mapa ↗</a>
+          </article>
+          <article class="detail-card reveal">
+            <span class="card-number">03</span>
+            <div class="line-icon" aria-hidden="true">♢</div>
+            <h3>Traje</h3>
+            <p id="traje">Esporte fino</p>
+            <strong>Venha para celebrar</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="rsvp section" id="confirmacao">
+        <div class="rsvp-copy reveal">
+          <p class="eyebrow light">Sua presença importa</p>
+          <h2>Você vem?</h2>
+          <p>Por favor, confirme até <strong id="prazo">20 de setembro de 2026</strong>. Uma resposta por família é suficiente.</p>
+          <blockquote>“Até aqui nos ajudou o Senhor.”</blockquote>
+          <span>— 1 Samuel 7:12</span>
+        </div>
+
+        <div class="form-card reveal">
+          <div id="form-view">
+            <div class="form-header">
+              <span>RSVP</span>
+              <h2>Confirme sua presença</h2>
+              <p>Preencha os dados abaixo. Leva menos de um minuto.</p>
+            </div>
+
+            <form id="rsvp-form">
+              <div class="field">
+                <label for="nome">Seu nome completo</label>
+                <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como está no convite" required />
+              </div>
+
+              <fieldset class="field">
+                <legend>Você poderá comparecer?</legend>
+                <div class="choice-row">
+                  <label class="choice">
+                    <input type="radio" name="presenca" value="Sim" required />
+                    <span><b>Sim, estarei lá!</b><small>Mal posso esperar</small></span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="presenca" value="Não" required />
+                    <span><b>Não poderei ir</b><small>Estarei de coração</small></span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="field">
+                <label for="mensagem">Uma mensagem para os noivos <em>(opcional)</em></label>
+                <textarea id="mensagem" name="mensagem" rows="3" placeholder="Deixe seu carinho por aqui..."></textarea>
+              </div>
+
+              <button class="button button-submit" type="submit">Enviar confirmação <span>→</span></button>
+              <p class="privacy">Seus dados serão usados somente para a organização do casamento.</p>
+            </form>
+          </div>
+
+          <div class="success hidden" id="success-view" role="status" aria-live="polite">
+            <div class="success-mark">✓</div>
+            <p class="eyebrow">Resposta recebida</p>
+            <h2 id="success-title">Obrigado!</h2>
+            <p id="success-message">Sua confirmação foi registrada com carinho.</p>
+            <button class="text-button" id="edit-response" type="button">Editar minha resposta</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="monogram footer-mark">A<span>&</span>G</div>
+      <p>Feito com amor para celebrar o nosso sim.</p>
+      <small id="footer-date">07 · 11 · 2026</small>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
