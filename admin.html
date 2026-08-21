@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="admin.css?v=20260821-3" />
+    <link rel="stylesheet" href="admin.css?v=20260821-4" />
   </head>
   <body>
     <div id="dashboard">
@@ -51,19 +51,19 @@
         <div class="panel-heading">
           <div>
             <p class="eyebrow">Convites personalizados</p>
-            <h2>Links por família</h2>
+            <h2>Links por convidado</h2>
           </div>
         </div>
         <form class="family-form" id="family-form">
           <label class="family-field">
-            <span>Nome da família ou responsáveis</span>
-            <input id="family-input" type="text" maxlength="120" placeholder="Ex.: Família Silva" required />
+            <span>Nome do convidado ou nomes do grupo</span>
+            <input id="family-input" type="text" maxlength="120" placeholder="Ex.: João, Maria e Pedro" required />
           </label>
-          <button class="family-add-button" type="submit">Adicionar família</button>
+          <button class="family-add-button" type="submit">Gerar convite</button>
         </form>
         <p class="family-feedback" id="family-feedback" role="status" aria-live="polite"></p>
         <div class="family-list" id="family-list"></div>
-        <div class="family-empty" id="family-empty">Nenhuma família cadastrada.</div>
+        <div class="family-empty" id="family-empty">Nenhum convite personalizado cadastrado.</div>
       </section>
 
       <section class="guest-panel">
@@ -112,7 +112,7 @@
 
     </div>
 
-    <script src="config.js?v=20260821-3"></script>
-    <script src="admin.js?v=20260821-3"></script>
+    <script src="config.js?v=20260821-4"></script>
+    <script src="admin.js?v=20260821-4"></script>
   </body>
 </html>

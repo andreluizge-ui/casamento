@@ -37,29 +37,35 @@ document.getElementById("mapa-link").href = casamento.mapa;
 document.title = `${casamento.noiva} & ${casamento.noivo} | Confirme sua presença`;
 
 const form = document.getElementById("rsvp-form");
-const familyToken = new URLSearchParams(window.location.search).get("familia");
+const linkParams = new URLSearchParams(window.location.search);
+const invitationToken = linkParams.get("convite") || linkParams.get("familia");
+let invitationNames = "";
 
 async function personalizarConvite() {
-  if (!familyToken) return;
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (!invitationToken) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Abra o link personalizado recebido";
+    return;
+  }
   try {
     const { url, key } = window.SUPABASE_CONFIG;
     const response = await fetch(`${url}/rest/v1/rpc/buscar_familia`, {
       method: "POST",
       headers: { apikey: key, "Content-Type": "application/json" },
-      body: JSON.stringify({ p_token: familyToken }),
+      body: JSON.stringify({ p_token: invitationToken }),
     });
     if (!response.ok) return;
     const dados = await response.json();
-    const familia = Array.isArray(dados) ? dados[0] : dados;
-    if (!familia?.nome) return;
+    const convite = Array.isArray(dados) ? dados[0] : dados;
+    if (!convite?.nome) throw new Error("Convite não encontrado");
 
-    document.getElementById("family-name").textContent = familia.nome;
-    document.getElementById("family-greeting").classList.remove("hidden");
-    const nomeInput = document.getElementById("nome");
-    nomeInput.value = familia.nome;
-    nomeInput.readOnly = true;
+    invitationNames = convite.nome;
+    document.getElementById("guest-names").textContent = invitationNames;
+    document.getElementById("guest-highlight").classList.remove("hidden");
   } catch {
-    // Mantém o convite genérico caso o link não possa ser validado.
+    submitButton.disabled = true;
+    submitButton.textContent = "Link de convite inválido";
   }
 }
 
@@ -70,6 +76,7 @@ form.addEventListener("submit", async (event) => {
   if (!form.reportValidity()) return;
 
   const dados = Object.fromEntries(new FormData(form).entries());
+  if (!invitationNames) return;
   const submitButton = form.querySelector('button[type="submit"]');
   const originalButtonText = submitButton.innerHTML;
   submitButton.disabled = true;
@@ -80,13 +87,13 @@ form.addEventListener("submit", async (event) => {
     const response = await fetch(`${url}/rest/v1/rpc/confirmar_presenca`, {
       method: "POST",
       headers: { apikey: key, "Content-Type": "application/json" },
-      body: JSON.stringify({ p_nome: dados.nome, p_presenca: dados.presenca, p_mensagem: dados.mensagem || null }),
+      body: JSON.stringify({ p_nome: invitationNames, p_presenca: dados.presenca, p_mensagem: dados.mensagem || null }),
     });
     if (!response.ok) throw new Error("Falha no envio");
 
     document.getElementById("form-view").classList.add("hidden");
     document.getElementById("success-view").classList.remove("hidden");
-    document.getElementById("success-title").textContent = dados.presenca === "Sim" ? `Que alegria, ${dados.nome.split(" ")[0]}!` : `Obrigado por responder, ${dados.nome.split(" ")[0]}.`;
+    document.getElementById("success-title").textContent = dados.presenca === "Sim" ? "Que alegria!" : "Obrigado por responder.";
     document.getElementById("success-message").textContent = dados.presenca === "Sim" ? "Sua presença foi confirmada. Estamos contando os dias para celebrar com você!" : "Sentiremos sua falta, mas agradecemos muito por nos avisar.";
     document.querySelector(".form-card").scrollIntoView({ behavior: "smooth", block: "center" });
   } catch {

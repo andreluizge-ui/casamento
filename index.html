@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20260821-3" />
+    <link rel="stylesheet" href="styles.css?v=20260821-4" />
   </head>
   <body>
     <header class="hero" id="inicio">
@@ -32,7 +32,11 @@
       <div class="hero-content reveal">
         <p class="eyebrow">Vamos nos casar</p>
         <h1><span id="nome-noiva">André</span> <i>&</i> <span id="nome-noivo">Giselly</span></h1>
-        <p class="family-greeting hidden" id="family-greeting">Este convite foi preparado especialmente para <strong id="family-name"></strong>.</p>
+        <div class="guest-highlight hidden" id="guest-highlight">
+          <span>Convidamos com carinho</span>
+          <strong id="guest-names"></strong>
+          <small>para celebrar este momento conosco</small>
+        </div>
         <p class="intro">Tem histórias que ficam ainda mais bonitas quando compartilhadas.<br />Queremos você celebrando a nossa com a gente.</p>
         <a class="button button-primary" href="#confirmacao">Confirmar presença <span>→</span></a>
       </div>
@@ -127,15 +131,10 @@
           <div id="form-view">
             <div class="form-header">
               <h2>Confirme sua presença</h2>
-              <p>Preencha os dados abaixo. Leva menos de um minuto.</p>
+              <p>Escolha sua resposta e, se desejar, deixe uma mensagem.</p>
             </div>
 
             <form id="rsvp-form">
-              <div class="field">
-                <label for="nome">Seu nome completo</label>
-                <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como está no convite" required />
-              </div>
-
               <fieldset class="field">
                 <legend>Você poderá comparecer?</legend>
                 <div class="choice-row">
@@ -177,7 +176,7 @@
       <small id="footer-date">07 · 11 · 2026</small>
     </footer>
 
-    <script src="config.js?v=20260821-3"></script>
-    <script src="script.js?v=20260821-3"></script>
+    <script src="config.js?v=20260821-4"></script>
+    <script src="script.js?v=20260821-4"></script>
   </body>
 </html>

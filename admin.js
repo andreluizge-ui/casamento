@@ -27,7 +27,7 @@ async function chamarRpc(funcao, parametros = {}) {
 }
 
 function linkDaFamilia(token) {
-  return `${window.location.origin}${window.location.pathname.replace(/admin\.html$/, "")}?familia=${encodeURIComponent(token)}`;
+  return `${window.location.origin}${window.location.pathname.replace(/admin\.html$/, "")}?convite=${encodeURIComponent(token)}`;
 }
 
 function renderizarFamilias() {
@@ -35,7 +35,7 @@ function renderizarFamilias() {
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
     .map((familia) => `
       <article class="family-item">
-        <div><strong>${escaparHtml(familia.nome)}</strong><small>Link exclusivo da família</small></div>
+        <div><strong>${escaparHtml(familia.nome)}</strong><small>Convite exclusivo para estes convidados</small></div>
         <div class="family-actions">
           <button class="copy-link-button" type="button" data-token="${familia.token}">Copiar link</button>
           <button class="remove-family-button" type="button" data-family-id="${familia.id}">Excluir</button>
@@ -146,10 +146,10 @@ elements.familyForm.addEventListener("submit", async (event) => {
     const familia = Array.isArray(dados) ? dados[0] : dados;
     if (familia && !familias.some((item) => item.id === familia.id)) familias.push(familia);
     elements.familyInput.value = "";
-    elements.familyFeedback.textContent = "Família adicionada. O link já pode ser copiado.";
+    elements.familyFeedback.textContent = "Convite gerado. O link já pode ser copiado.";
     renderizarFamilias();
   } catch {
-    elements.familyFeedback.textContent = "Não foi possível adicionar a família.";
+    elements.familyFeedback.textContent = "Não foi possível gerar o convite.";
   } finally {
     button.disabled = false;
   }
@@ -167,7 +167,7 @@ elements.familyList.addEventListener("click", async (event) => {
   const removeButton = event.target.closest(".remove-family-button");
   if (!removeButton) return;
   const familia = familias.find((item) => item.id === removeButton.dataset.familyId);
-  if (!familia || !window.confirm(`Excluir o link de ${familia.nome}?`)) return;
+  if (!familia || !window.confirm(`Excluir o convite de ${familia.nome}?`)) return;
   removeButton.disabled = true;
   try {
     await chamarRpc("excluir_familia", { p_id: familia.id });
@@ -212,5 +212,5 @@ buscarRespostas()
   });
 
 buscarFamilias().catch(() => {
-  elements.familyFeedback.textContent = "Não foi possível carregar os links das famílias.";
+  elements.familyFeedback.textContent = "Não foi possível carregar os convites personalizados.";
 });
