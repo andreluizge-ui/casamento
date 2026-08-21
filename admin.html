@@ -47,6 +47,25 @@
         </article>
       </section>
 
+      <section class="family-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Convites personalizados</p>
+            <h2>Links por família</h2>
+          </div>
+        </div>
+        <form class="family-form" id="family-form">
+          <label class="family-field">
+            <span>Nome da família ou responsáveis</span>
+            <input id="family-input" type="text" maxlength="120" placeholder="Ex.: Família Silva" required />
+          </label>
+          <button class="family-add-button" type="submit">Adicionar família</button>
+        </form>
+        <p class="family-feedback" id="family-feedback" role="status" aria-live="polite"></p>
+        <div class="family-list" id="family-list"></div>
+        <div class="family-empty" id="family-empty">Nenhuma família cadastrada.</div>
+      </section>
+
       <section class="guest-panel">
         <div class="panel-heading">
           <div>

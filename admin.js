@@ -5,10 +5,50 @@ const elements = {
   remaining: document.getElementById("remaining-count"), responses: document.getElementById("response-count"),
   progress: document.getElementById("capacity-progress"), list: document.getElementById("guest-list"),
   empty: document.getElementById("empty-state"), search: document.getElementById("search"),
+  familyForm: document.getElementById("family-form"), familyInput: document.getElementById("family-input"),
+  familyList: document.getElementById("family-list"), familyEmpty: document.getElementById("family-empty"),
+  familyFeedback: document.getElementById("family-feedback"),
 };
 
 let respostas = [];
+let familias = [];
 let filtroAtual = "Todos";
+
+async function chamarRpc(funcao, parametros = {}) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${funcao}`, {
+    method: "POST",
+    headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify(parametros),
+  });
+  if (!response.ok) throw new Error(`Falha em ${funcao}`);
+  if (response.status === 204) return null;
+  const texto = await response.text();
+  return texto ? JSON.parse(texto) : null;
+}
+
+function linkDaFamilia(token) {
+  return `${window.location.origin}${window.location.pathname.replace(/admin\.html$/, "")}?familia=${encodeURIComponent(token)}`;
+}
+
+function renderizarFamilias() {
+  elements.familyList.innerHTML = familias
+    .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+    .map((familia) => `
+      <article class="family-item">
+        <div><strong>${escaparHtml(familia.nome)}</strong><small>Link exclusivo da família</small></div>
+        <div class="family-actions">
+          <button class="copy-link-button" type="button" data-token="${familia.token}">Copiar link</button>
+          <button class="remove-family-button" type="button" data-family-id="${familia.id}">Excluir</button>
+        </div>
+      </article>
+    `).join("");
+  elements.familyEmpty.classList.toggle("hidden", familias.length > 0);
+}
+
+async function buscarFamilias() {
+  familias = await chamarRpc("listar_familias") || [];
+  renderizarFamilias();
+}
 
 async function buscarRespostas() {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/listar_confirmacoes`, {
@@ -94,6 +134,51 @@ elements.list.addEventListener("click", (event) => {
   if (button) excluirConvidado(button.dataset.id);
 });
 
+elements.familyForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const nome = elements.familyInput.value.trim();
+  if (!nome) return;
+  const button = elements.familyForm.querySelector("button");
+  button.disabled = true;
+  elements.familyFeedback.textContent = "";
+  try {
+    const dados = await chamarRpc("adicionar_familia", { p_nome: nome });
+    const familia = Array.isArray(dados) ? dados[0] : dados;
+    if (familia && !familias.some((item) => item.id === familia.id)) familias.push(familia);
+    elements.familyInput.value = "";
+    elements.familyFeedback.textContent = "Família adicionada. O link já pode ser copiado.";
+    renderizarFamilias();
+  } catch {
+    elements.familyFeedback.textContent = "Não foi possível adicionar a família.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+elements.familyList.addEventListener("click", async (event) => {
+  const copyButton = event.target.closest(".copy-link-button");
+  if (copyButton) {
+    await navigator.clipboard.writeText(linkDaFamilia(copyButton.dataset.token));
+    copyButton.textContent = "Link copiado!";
+    setTimeout(() => { copyButton.textContent = "Copiar link"; }, 1800);
+    return;
+  }
+
+  const removeButton = event.target.closest(".remove-family-button");
+  if (!removeButton) return;
+  const familia = familias.find((item) => item.id === removeButton.dataset.familyId);
+  if (!familia || !window.confirm(`Excluir o link de ${familia.nome}?`)) return;
+  removeButton.disabled = true;
+  try {
+    await chamarRpc("excluir_familia", { p_id: familia.id });
+    familias = familias.filter((item) => item.id !== familia.id);
+    renderizarFamilias();
+  } catch {
+    removeButton.disabled = false;
+    window.alert("Não foi possível excluir este link.");
+  }
+});
+
 elements.search.addEventListener("input", renderizar);
 document.querySelectorAll(".filter").forEach((button) => {
   button.addEventListener("click", () => {
@@ -125,3 +210,7 @@ buscarRespostas()
     elements.empty.querySelector("h3").textContent = "Não foi possível carregar a lista";
     elements.empty.querySelector("p").textContent = "Atualize a página e tente novamente.";
   });
+
+buscarFamilias().catch(() => {
+  elements.familyFeedback.textContent = "Não foi possível carregar os links das famílias.";
+});

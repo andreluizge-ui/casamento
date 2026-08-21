@@ -29,6 +29,8 @@ a { color: inherit; }
 .eyebrow { margin: 0 0 20px; color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; }
 .hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(72px, 11vw, 150px); font-weight: 400; letter-spacing: -.06em; line-height: .85; }
 .hero h1 i { color: var(--gold); font-size: .55em; font-weight: 400; }
+.family-greeting { max-width: 620px; margin: 28px auto -15px; color: var(--forest); font-size: 12px; letter-spacing: .08em; line-height: 1.6; text-transform: uppercase; }
+.family-greeting strong { color: var(--gold); font-weight: 600; }
 .intro { margin: 38px auto 32px; color: #526057; font-family: var(--serif); font-size: clamp(18px, 2vw, 23px); line-height: 1.55; }
 .button { border: 0; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 28px; padding: 17px 23px; font: 600 11px var(--sans); letter-spacing: .13em; text-decoration: none; text-transform: uppercase; transition: .25s ease; }
 .button-primary, .button-submit { color: white; background: var(--forest); }
@@ -88,6 +90,7 @@ a { color: inherit; }
 input, select, textarea { width: 100%; border: 0; border-bottom: 1px solid #ccd0ca; border-radius: 0; outline: 0; padding: 11px 2px; color: var(--ink); background: transparent; font: 14px var(--sans); }
 textarea { resize: vertical; }
 input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+input[readonly] { color: #59665c; background: #f7f3ec; cursor: default; }
 .field > small { display: block; margin-top: 7px; color: #929990; font-size: 10px; }
 .choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .choice { cursor: pointer; margin: 0 !important; }
@@ -142,6 +145,7 @@ footer small { color: var(--gold); letter-spacing: .22em; }
   .hero h1 { font-size: clamp(58px, 20vw, 82px); }
   .hero-content .eyebrow { margin-bottom: 16px; }
   .intro { margin: 26px auto 25px; font-size: 17px; }
+  .family-greeting { margin: 22px auto -8px; font-size: 10px; }
   .button-primary { width: 100%; max-width: 310px; }
   .hero-date { right: 18px; bottom: 20px; }
   .botanical { font-size: 140px; }

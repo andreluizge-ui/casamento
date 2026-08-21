@@ -37,6 +37,33 @@ document.getElementById("mapa-link").href = casamento.mapa;
 document.title = `${casamento.noiva} & ${casamento.noivo} | Confirme sua presença`;
 
 const form = document.getElementById("rsvp-form");
+const familyToken = new URLSearchParams(window.location.search).get("familia");
+
+async function personalizarConvite() {
+  if (!familyToken) return;
+  try {
+    const { url, key } = window.SUPABASE_CONFIG;
+    const response = await fetch(`${url}/rest/v1/rpc/buscar_familia`, {
+      method: "POST",
+      headers: { apikey: key, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_token: familyToken }),
+    });
+    if (!response.ok) return;
+    const dados = await response.json();
+    const familia = Array.isArray(dados) ? dados[0] : dados;
+    if (!familia?.nome) return;
+
+    document.getElementById("family-name").textContent = familia.nome;
+    document.getElementById("family-greeting").classList.remove("hidden");
+    const nomeInput = document.getElementById("nome");
+    nomeInput.value = familia.nome;
+    nomeInput.readOnly = true;
+  } catch {
+    // Mantém o convite genérico caso o link não possa ser validado.
+  }
+}
+
+personalizarConvite();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
