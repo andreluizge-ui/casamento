@@ -13,6 +13,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); background: var(--cream); font-family: var(--sans); }
+body { overflow-x: hidden; }
 a { color: inherit; }
 .hidden { display: none !important; }
 
@@ -111,8 +112,11 @@ footer small { color: var(--gold); letter-spacing: .22em; }
 .reveal.visible { opacity: 1; transform: none; }
 
 @media (max-width: 800px) {
-  .nav-links { display: none; }
-  .hero { min-height: 820px; }
+  .nav { padding: 20px 22px; }
+  .nav-links { gap: 0; }
+  .nav-links a:not(:last-child) { display: none; }
+  .nav-links a:last-child { display: block; padding: 11px 13px; border: 1px solid var(--forest); font-size: 9px; }
+  .hero { min-height: 780px; padding: 105px 22px 100px; }
   .hero h1 { font-size: clamp(65px, 22vw, 100px); }
   .hero h1 span { display: block; }
   .hero h1 i { display: block; margin: 8px; }
@@ -120,6 +124,7 @@ footer small { color: var(--gold); letter-spacing: .22em; }
   .arch-two { width: 100vw; }
   .hero-date { right: 24px; bottom: 28px; }
   .section { padding: 85px 22px; }
+  .section-heading { margin-bottom: 42px; }
   .detail-grid { grid-template-columns: 1fr; gap: 14px; }
   .detail-card + .detail-card { border-left: 1px solid var(--line); }
   .detail-card.featured { transform: none; }
@@ -129,11 +134,31 @@ footer small { color: var(--gold); letter-spacing: .22em; }
   .rsvp-copy blockquote { margin-top: 45px; }
   .form-card { padding: 36px 24px; }
   .choice-row { grid-template-columns: 1fr; }
+  input, select, textarea { font-size: 16px; }
 }
 
 @media (max-width: 520px) {
+  .hero { min-height: 700px; }
+  .hero h1 { font-size: clamp(58px, 20vw, 82px); }
+  .hero-content .eyebrow { margin-bottom: 16px; }
+  .intro { margin: 26px auto 25px; font-size: 17px; }
+  .button-primary { width: 100%; max-width: 310px; }
+  .hero-date { right: 18px; bottom: 20px; }
+  .botanical { font-size: 140px; }
+  .section { padding: 68px 18px; }
+  .section-heading h2, .rsvp h2, .form-header h2, .success h2 { font-size: clamp(38px, 13vw, 52px); }
+  .detail-card { min-height: auto; padding: 45px 24px 38px; }
   .guideline-grid { grid-template-columns: 1fr; }
   .guideline-card.invitation-note { grid-column: auto; text-align: left; }
+  .guideline-card { min-height: auto; padding: 28px 24px; }
+  .guideline-card h3 { margin-top: 20px; }
+  .rsvp { gap: 38px; }
+  .rsvp-copy blockquote { margin-top: 34px; }
+  .form-card { min-height: 0; padding: 30px 18px; }
+  .form-header { margin-bottom: 30px; }
+  .form-header > span { float: none; display: block; margin-bottom: 12px; }
+  .button-submit { gap: 16px; padding-inline: 14px; }
+  footer { padding: 52px 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

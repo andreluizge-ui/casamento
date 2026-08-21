@@ -51,11 +51,11 @@ function renderizar() {
   atualizarResumo();
   elements.list.innerHTML = filtradas.map((item) => `
     <tr>
-      <td>${escaparHtml(item.nome)}</td>
-      <td><span class="status ${item.presenca === "Sim" ? "yes" : "no"}">${item.presenca === "Sim" ? "Confirmado" : "Não irá"}</span></td>
-      <td class="message-cell" title="${escaparHtml(item.mensagem || "")}">${escaparHtml(item.mensagem || "—")}</td>
-      <td>${formatarData(item.atualizado_em || item.enviado_em)}</td>
-      <td class="actions-cell"><button class="delete-button" type="button" data-id="${item.id}" aria-label="Excluir ${escaparHtml(item.nome)}">Excluir</button></td>
+      <td data-label="Convidado">${escaparHtml(item.nome)}</td>
+      <td data-label="Resposta"><span class="status ${item.presenca === "Sim" ? "yes" : "no"}">${item.presenca === "Sim" ? "Confirmado" : "Não irá"}</span></td>
+      <td data-label="Mensagem" class="message-cell" title="${escaparHtml(item.mensagem || "")}">${escaparHtml(item.mensagem || "—")}</td>
+      <td data-label="Data">${formatarData(item.atualizado_em || item.enviado_em)}</td>
+      <td data-label="Ações" class="actions-cell"><button class="delete-button" type="button" data-id="${item.id}" aria-label="Excluir ${escaparHtml(item.nome)}">Excluir</button></td>
     </tr>
   `).join("");
   elements.empty.classList.toggle("hidden", filtradas.length > 0);
