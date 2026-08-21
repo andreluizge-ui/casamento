@@ -61,10 +61,14 @@ table { width: 100%; border-collapse: collapse; }
 th { padding: 13px 14px; color: #929990; background: #f6f4ef; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-align: left; text-transform: uppercase; }
 td { padding: 19px 14px; border-bottom: 1px solid var(--line); color: #626b63; font-size: 12px; }
 td:first-child { color: var(--ink); font-weight: 600; }
+th:last-child, td:last-child { text-align: right; }
 .message-cell { max-width: 350px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status { display: inline-block; padding: 6px 9px; border-radius: 30px; font-size: 9px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .status.yes { color: #3b5b43; background: #e5eee5; }
 .status.no { color: #8a4d48; background: #f3e6e3; }
+.delete-button { padding: 7px 10px; border: 1px solid #b86b62; cursor: pointer; color: #9d4d45; background: transparent; font-size: 9px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: .2s; }
+.delete-button:hover { color: white; background: #9d4d45; }
+.delete-button:disabled { cursor: wait; opacity: .55; }
 .empty-state { padding: 70px 20px; text-align: center; }
 .empty-state span { color: var(--gold); font-size: 25px; }
 .empty-state h3 { margin: 18px 0 7px; font: 400 27px var(--serif); }

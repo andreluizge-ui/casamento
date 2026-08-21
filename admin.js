@@ -55,10 +55,44 @@ function renderizar() {
       <td><span class="status ${item.presenca === "Sim" ? "yes" : "no"}">${item.presenca === "Sim" ? "Confirmado" : "Não irá"}</span></td>
       <td class="message-cell" title="${escaparHtml(item.mensagem || "")}">${escaparHtml(item.mensagem || "—")}</td>
       <td>${formatarData(item.atualizado_em || item.enviado_em)}</td>
+      <td class="actions-cell"><button class="delete-button" type="button" data-id="${item.id}" aria-label="Excluir ${escaparHtml(item.nome)}">Excluir</button></td>
     </tr>
   `).join("");
   elements.empty.classList.toggle("hidden", filtradas.length > 0);
 }
+
+async function excluirConvidado(id) {
+  const convidado = respostas.find((item) => item.id === id);
+  if (!convidado || !window.confirm(`Excluir ${convidado.nome} da lista? Esta ação não pode ser desfeita.`)) return;
+
+  const button = elements.list.querySelector(`[data-id="${CSS.escape(id)}"]`);
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Excluindo…";
+  }
+
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/excluir_confirmacao`, {
+      method: "POST",
+      headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_id: id }),
+    });
+    if (!response.ok) throw new Error("Não foi possível excluir o convidado");
+    respostas = respostas.filter((item) => item.id !== id);
+    renderizar();
+  } catch {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Excluir";
+    }
+    window.alert("Não foi possível excluir o convidado. Tente novamente.");
+  }
+}
+
+elements.list.addEventListener("click", (event) => {
+  const button = event.target.closest(".delete-button");
+  if (button) excluirConvidado(button.dataset.id);
+});
 
 elements.search.addEventListener("input", renderizar);
 document.querySelectorAll(".filter").forEach((button) => {
