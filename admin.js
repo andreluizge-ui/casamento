@@ -30,12 +30,23 @@ function linkDaFamilia(token) {
   return `${window.location.origin}${window.location.pathname.replace(/admin\.html$/, "")}?convite=${encodeURIComponent(token)}`;
 }
 
+function contarNomes(valor = "") {
+  return valor
+    .split(/\s*(?:,|;|\se\s)\s*/i)
+    .map((nome) => nome.trim())
+    .filter(Boolean).length || 1;
+}
+
+function rotuloQuantidade(quantidade) {
+  return `${quantidade} ${quantidade === 1 ? "convidado" : "convidados"}`;
+}
+
 function renderizarFamilias() {
   elements.familyList.innerHTML = familias
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
     .map((familia) => `
       <article class="family-item">
-        <div><strong>${escaparHtml(familia.nome)}</strong><small>Convite exclusivo para estes convidados</small></div>
+        <div><strong>${escaparHtml(familia.nome)}</strong><small>${rotuloQuantidade(contarNomes(familia.nome))} neste convite</small></div>
         <div class="family-actions">
           <button class="copy-link-button" type="button" data-token="${familia.token}">Copiar link</button>
           <button class="remove-family-button" type="button" data-family-id="${familia.id}">Excluir</button>
@@ -72,8 +83,12 @@ function escaparHtml(valor = "") {
 }
 
 function atualizarResumo() {
-  const confirmados = respostas.filter((item) => item.presenca === "Sim").length;
-  const recusas = respostas.filter((item) => item.presenca === "Não").length;
+  const confirmados = respostas
+    .filter((item) => item.presenca === "Sim")
+    .reduce((total, item) => total + contarNomes(item.nome), 0);
+  const recusas = respostas
+    .filter((item) => item.presenca === "Não")
+    .reduce((total, item) => total + contarNomes(item.nome), 0);
   elements.confirmed.textContent = confirmados;
   elements.declined.textContent = recusas;
   elements.remaining.textContent = Math.max(0, LIMITE_CONVIDADOS - confirmados);
@@ -91,7 +106,7 @@ function renderizar() {
   atualizarResumo();
   elements.list.innerHTML = filtradas.map((item) => `
     <tr>
-      <td data-label="Convidado">${escaparHtml(item.nome)}</td>
+      <td data-label="Convidado">${escaparHtml(item.nome)}<small class="guest-quantity">${rotuloQuantidade(contarNomes(item.nome))}</small></td>
       <td data-label="Resposta"><span class="status ${item.presenca === "Sim" ? "yes" : "no"}">${item.presenca === "Sim" ? "Confirmado" : "Não irá"}</span></td>
       <td data-label="Mensagem" class="message-cell" title="${escaparHtml(item.mensagem || "")}">${escaparHtml(item.mensagem || "—")}</td>
       <td data-label="Data">${formatarData(item.atualizado_em || item.enviado_em)}</td>
@@ -191,7 +206,7 @@ document.querySelectorAll(".filter").forEach((button) => {
 
 document.getElementById("export-button").addEventListener("click", () => {
   const protegerCelula = (valor = "") => `"${String(valor).replaceAll('"', '""')}"`;
-  const linhas = [["Nome", "Resposta", "Mensagem", "Data"], ...respostas.map((item) => [item.nome, item.presenca, item.mensagem || "", formatarData(item.atualizado_em || item.enviado_em)])];
+  const linhas = [["Nome(s)", "Quantidade", "Resposta", "Mensagem", "Data"], ...respostas.map((item) => [item.nome, contarNomes(item.nome), item.presenca, item.mensagem || "", formatarData(item.atualizado_em || item.enviado_em)])];
   const csv = "\uFEFF" + linhas.map((linha) => linha.map(protegerCelula).join(";")).join("\n");
   const downloadUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   const link = document.createElement("a");

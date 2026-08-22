@@ -51,6 +51,7 @@ main { max-width: 1250px; margin: -38px auto 0; padding: 0 28px 60px; position: 
 .family-field span { display: block; margin-bottom: 8px; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
 .family-field input { width: 100%; padding: 12px 3px; border: 0; border-bottom: 1px solid #cdd2cc; outline: 0; background: transparent; font-size: 14px; }
 .family-field input:focus { border-color: var(--gold); }
+.family-field small { display: block; margin-top: 7px; color: #90978f; font-size: 9px; }
 .family-add-button, .copy-link-button { padding: 13px 17px; border: 1px solid var(--forest); cursor: pointer; color: white; background: var(--forest); font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .family-add-button:disabled { cursor: wait; opacity: .6; }
 .family-feedback { min-height: 18px; margin: 0; color: #607063; font-size: 11px; }
@@ -78,6 +79,7 @@ table { width: 100%; border-collapse: collapse; }
 th { padding: 13px 14px; color: #929990; background: #f6f4ef; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-align: left; text-transform: uppercase; }
 td { padding: 19px 14px; border-bottom: 1px solid var(--line); color: #626b63; font-size: 12px; }
 td:first-child { color: var(--ink); font-weight: 600; }
+.guest-quantity { display: block; margin-top: 5px; color: #929990; font-size: 9px; font-weight: 400; }
 th:last-child, td:last-child { text-align: right; }
 .message-cell { max-width: 350px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status { display: inline-block; padding: 6px 9px; border-radius: 30px; font-size: 9px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
