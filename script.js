@@ -11,7 +11,7 @@ const casamento = {
   endereco: "Rua Cristóvão Cavalcanti, 181 · Iputinga · Recife/PE",
   mapa: "https://www.google.com/maps/search/?api=1&query=Espa%C3%A7o+Dona+Cora%2C+Rua+Crist%C3%B3v%C3%A3o+Cavalcanti%2C+181%2C+Iputinga%2C+Recife%2C+PE",
   traje: "Esporte fino",
-  prazoConfirmacao: "20 de setembro de 2026",
+  prazoConfirmacao: "10 de outubro de 2026",
 };
 
 const campos = {
